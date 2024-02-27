@@ -1,2 +1,5 @@
-# ObjectOrientedProgramming2024
-Object Oriented Programming 2023/2024 course @fmi Sofia University
+# :books: Object Oriented Programming 2023/2024 course @FMI Sofia University
+
+### :pushpin: Content by weeks:
+
+#### :one: Compilation, header guards, structs and unions

@@ -3,3 +3,5 @@
 ### :pushpin: Content by weeks:
 
 #### :one: Compilation, header guards, structs and unions
+
+#### :two: Structs and unions

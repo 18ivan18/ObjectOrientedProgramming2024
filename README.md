@@ -5,3 +5,7 @@
 #### :one: Compilation, header guards, structs and unions
 
 #### :two: Structs and unions
+
+#### :three: Classes adccess modifiers, methodsCompilation, header guards, pointers and references review
+
+#### :four: Rule of three

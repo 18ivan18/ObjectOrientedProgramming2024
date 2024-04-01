@@ -9,3 +9,5 @@
 #### :three: Classes adccess modifiers, methodsCompilation, header guards, pointers and references review
 
 #### :four: Rule of three
+
+#### :five: Operator overloading, friends

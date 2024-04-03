@@ -11,3 +11,7 @@
 #### :four: Rule of three
 
 #### :five: Operator overloading, friends
+
+#### :six: Rule of five, lvalue, rvalue
+
+#### :seven: File streams

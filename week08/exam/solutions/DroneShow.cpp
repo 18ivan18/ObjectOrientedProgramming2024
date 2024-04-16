@@ -4,6 +4,10 @@
 
 DroneShow::DroneShow(const char *name)
 {
+    if (strlen(name) > MAX_NAME_SIZE)
+    {
+        throw std::runtime_error("Name is too long");
+    }
     strcpy(this->name, name);
     for (size_t i = 0; i < MAX_DRONES; i++)
     {
@@ -97,33 +101,40 @@ bool DroneShow::isEmpty(int idx) const
 
 void DroneShow::play()
 {
-    try
-    {
-        while (true)
-        {
-            for (size_t i = 0; i < MAX_DRONES; i++)
-            {
-                if (!isEmpty(i))
-                {
-                    std::cout << drones[i]->getId() << '\n';
-                    drones[i]->getPosition().print();
-                }
-            }
+    std::cout << "Playing: " << name << '\n';
 
-            for (size_t i = 0; i < MAX_DRONES; i++)
+    int numberOfPositions = 0;
+    for (size_t i = 0; i < MAX_DRONES; i++)
+    {
+        if (!isEmpty(i))
+        {
+            numberOfPositions = drones[i]->getNumberOfPositions();
+            break;
+        }
+    }
+
+    for (size_t i = 0; i < numberOfPositions; i++)
+    {
+        for (size_t i = 0; i < MAX_DRONES; i++)
+        {
+            if (!isEmpty(i))
             {
-                if (!isEmpty(i))
+                std::cout << drones[i]->getId() << '\n';
+                std::cout << drones[i]->getPosition() << "\n\n";
+                try
                 {
                     drones[i]->moveWithOneStep();
+                }
+                catch (const std::exception &e)
+                {
+                    // intentionally swallowed
+                    // usually a bad practice
+                    // std::cerr << e.what() << '\n';
                 }
             }
         }
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-        std::cout << "Show ended\n";
-    }
+    std::cout << "Show ended\n";
 }
 
 DroneShow::DroneShow(const char *name, Drone **drones) : DroneShow(name)

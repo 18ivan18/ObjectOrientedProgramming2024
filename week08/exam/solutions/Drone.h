@@ -16,8 +16,6 @@ private:
     void free();
     void copy(const char *id, const char *fileName, double x, double y, int positionIndex);
 
-    void getPositions(Position *&positions, int &numPositions);
-
 public:
     Drone(const char *id, const char *fileName, double x, double y, int positionIndex = 0);
     Drone(const Drone &);
@@ -28,6 +26,7 @@ public:
     void printPath();
     void moveWithOneStep();
 
+    int getNumberOfPositions();
     Position getPosition();
     char *getId();
 

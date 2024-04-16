@@ -76,22 +76,33 @@ Drone::~Drone()
 
 void Drone::printPath()
 {
-    int numPositions;
-    Position *pos = nullptr;
+    std::ifstream ifs(fileName, std::ios::binary);
 
-    getPositions(pos, numPositions);
-
-    for (size_t i = 0; i < numPositions; i++)
+    if (!ifs)
     {
-        std::cout << "(" << pos[i].x << ", " << pos[i].y << ")\n";
+        throw std::runtime_error("Cannot open file");
     }
 
-    delete[] pos;
+    ifs.seekg(0, std::ios::end);
+    std::streampos size = ifs.tellg();
+    size_t numOfPositions = size / sizeof(Position);
+
+    ifs.seekg(0, std::ios::beg);
+
+    Position *buffer = new Position[numOfPositions];
+
+    ifs.read((char *)buffer, numOfPositions * sizeof(Position));
+
+    for (int i = 0; i < numOfPositions; i++)
+    {
+        std::cout << buffer[i];
+    }
+
+    delete[] buffer;
 }
 
-void Drone::getPositions(Position *&positions, int &numPositions)
+void Drone::moveWithOneStep()
 {
-    assert(positions == nullptr);
     std::ifstream ifs(fileName, std::ios::binary);
 
     if (!ifs)
@@ -102,29 +113,36 @@ void Drone::getPositions(Position *&positions, int &numPositions)
     std::streampos end = ifs.tellg();
     ifs.seekg(0, std::ios::end);
     std::streampos size = ifs.tellg() - end;
-    ifs.seekg(0, std::ios::beg);
+    int numPositions = size / sizeof(Position);
 
-    numPositions = size / sizeof(Position);
-
-    positions = new Position[numPositions];
-
-    ifs.read((char *)positions, size);
-    ifs.close();
-}
-
-void Drone::moveWithOneStep()
-{
-    int numPositions;
-    Position *pos = nullptr;
-
-    getPositions(pos, numPositions);
     if (positionIndex >= numPositions - 1)
     {
         throw std::runtime_error("Position index out of range");
     }
 
-    position = pos[++positionIndex];
-    delete[] pos;
+    ifs.seekg(++positionIndex * sizeof(Position), std::ios::beg);
+
+    ifs.read((char *)&position, sizeof(Position));
+
+    ifs.close();
+}
+
+int Drone::getNumberOfPositions()
+{
+    std::ifstream ifs(fileName, std::ios::binary);
+
+    if (!ifs)
+    {
+        throw std::runtime_error("Cannot open file");
+    }
+
+    ifs.seekg(0, std::ios::end);
+    std::streampos size = ifs.tellg();
+    int numPositions = size / sizeof(Position);
+
+    ifs.close();
+
+    return numPositions;
 }
 
 Position Drone::getPosition()

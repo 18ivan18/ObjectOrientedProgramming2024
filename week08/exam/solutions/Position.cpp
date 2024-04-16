@@ -1,7 +1,8 @@
 #include "Position.h"
 #include <iostream>
 
-void Position::print()
+std::ostream &operator<<(std::ostream &os, const Position &pos)
 {
-    std::cout << "(" << x << ", " << y << ")\n";
+    os << "(" << pos.x << ", " << pos.y << ")\n";
+    return os;
 }

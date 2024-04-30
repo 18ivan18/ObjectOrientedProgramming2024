@@ -15,3 +15,7 @@
 #### :six: Rule of five, lvalue, rvalue
 
 #### :seven: File streams
+
+#### :eight: Inheritance
+
+#### :nine: Statics, templates
